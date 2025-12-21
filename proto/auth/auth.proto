@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package auth;
+option go_package = "github.com/goggle-source/authLotProto/auth";
+
+service Auth {
+    rpc Register(RegisterUserRequest) returns (RegisterUserResponse);
+    rpc Login(LoginUserRequest) returns (LoginUserResponse);
+    rpc ValidateToken(TokenRequest) returns (BoolResponse);
+}
+
+message RegisterUserRequest {
+    string name = 1;
+    string email = 2;
+    string password = 3;
+}
+
+message RegisterUserResponse {
+    string token = 1;
+    uint64 id = 2;
+}
+
+message LoginUserRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message LoginUserResponse {
+    string token = 1;
+    uint64 id = 2;
+}
+
+message TokenRequest {
+    string token = 1;
+}
+
+message BoolResponse {
+    bool isValid = 1;
+}
+
