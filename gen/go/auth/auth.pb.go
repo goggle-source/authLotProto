@@ -229,27 +229,27 @@ func (x *LoginUserResponse) GetName() string {
 	return ""
 }
 
-type TokenRequest struct {
+type ValidTokenRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TokenRequest) Reset() {
-	*x = TokenRequest{}
+func (x *ValidTokenRequest) Reset() {
+	*x = ValidTokenRequest{}
 	mi := &file_auth_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TokenRequest) String() string {
+func (x *ValidTokenRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TokenRequest) ProtoMessage() {}
+func (*ValidTokenRequest) ProtoMessage() {}
 
-func (x *TokenRequest) ProtoReflect() protoreflect.Message {
+func (x *ValidTokenRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_auth_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -261,39 +261,39 @@ func (x *TokenRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TokenRequest.ProtoReflect.Descriptor instead.
-func (*TokenRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ValidTokenRequest.ProtoReflect.Descriptor instead.
+func (*ValidTokenRequest) Descriptor() ([]byte, []int) {
 	return file_auth_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *TokenRequest) GetToken() string {
+func (x *ValidTokenRequest) GetToken() string {
 	if x != nil {
 		return x.Token
 	}
 	return ""
 }
 
-type BoolResponse struct {
+type ValidBoolResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	IsValid       bool                   `protobuf:"varint,1,opt,name=isValid,proto3" json:"isValid,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *BoolResponse) Reset() {
-	*x = BoolResponse{}
+func (x *ValidBoolResponse) Reset() {
+	*x = ValidBoolResponse{}
 	mi := &file_auth_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *BoolResponse) String() string {
+func (x *ValidBoolResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*BoolResponse) ProtoMessage() {}
+func (*ValidBoolResponse) ProtoMessage() {}
 
-func (x *BoolResponse) ProtoReflect() protoreflect.Message {
+func (x *ValidBoolResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_auth_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -305,12 +305,12 @@ func (x *BoolResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use BoolResponse.ProtoReflect.Descriptor instead.
-func (*BoolResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ValidBoolResponse.ProtoReflect.Descriptor instead.
+func (*ValidBoolResponse) Descriptor() ([]byte, []int) {
 	return file_auth_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *BoolResponse) GetIsValid() bool {
+func (x *ValidBoolResponse) GetIsValid() bool {
 	if x != nil {
 		return x.IsValid
 	}
@@ -334,15 +334,15 @@ const file_auth_proto_rawDesc = "" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\"=\n" +
 	"\x11LoginUserResponse\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\"$\n" +
-	"\fTokenRequest\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\"(\n" +
-	"\fBoolResponse\x12\x18\n" +
-	"\aisValid\x18\x01 \x01(\bR\aisValid2\xbc\x01\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\")\n" +
+	"\x11ValidTokenRequest\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"-\n" +
+	"\x11ValidBoolResponse\x12\x18\n" +
+	"\aisValid\x18\x01 \x01(\bR\aisValid2\xc6\x01\n" +
 	"\x04Auth\x12A\n" +
 	"\bRegister\x12\x19.auth.RegisterUserRequest\x1a\x1a.auth.RegisterUserResponse\x128\n" +
-	"\x05Login\x12\x16.auth.LoginUserRequest\x1a\x17.auth.LoginUserResponse\x127\n" +
-	"\rValidateToken\x12\x12.auth.TokenRequest\x1a\x12.auth.BoolResponseB3Z1github.com/goggle-source/authLotProto/gen/go/authb\x06proto3"
+	"\x05Login\x12\x16.auth.LoginUserRequest\x1a\x17.auth.LoginUserResponse\x12A\n" +
+	"\rValidateToken\x12\x17.auth.ValidTokenRequest\x1a\x17.auth.ValidBoolResponseB3Z1github.com/goggle-source/authLotProto/gen/go/authb\x06proto3"
 
 var (
 	file_auth_proto_rawDescOnce sync.Once
@@ -362,16 +362,16 @@ var file_auth_proto_goTypes = []any{
 	(*RegisterUserResponse)(nil), // 1: auth.RegisterUserResponse
 	(*LoginUserRequest)(nil),     // 2: auth.LoginUserRequest
 	(*LoginUserResponse)(nil),    // 3: auth.LoginUserResponse
-	(*TokenRequest)(nil),         // 4: auth.TokenRequest
-	(*BoolResponse)(nil),         // 5: auth.BoolResponse
+	(*ValidTokenRequest)(nil),    // 4: auth.ValidTokenRequest
+	(*ValidBoolResponse)(nil),    // 5: auth.ValidBoolResponse
 }
 var file_auth_proto_depIdxs = []int32{
 	0, // 0: auth.Auth.Register:input_type -> auth.RegisterUserRequest
 	2, // 1: auth.Auth.Login:input_type -> auth.LoginUserRequest
-	4, // 2: auth.Auth.ValidateToken:input_type -> auth.TokenRequest
+	4, // 2: auth.Auth.ValidateToken:input_type -> auth.ValidTokenRequest
 	1, // 3: auth.Auth.Register:output_type -> auth.RegisterUserResponse
 	3, // 4: auth.Auth.Login:output_type -> auth.LoginUserResponse
-	5, // 5: auth.Auth.ValidateToken:output_type -> auth.BoolResponse
+	5, // 5: auth.Auth.ValidateToken:output_type -> auth.ValidBoolResponse
 	3, // [3:6] is the sub-list for method output_type
 	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

@@ -30,7 +30,7 @@ const (
 type AuthClient interface {
 	Register(ctx context.Context, in *RegisterUserRequest, opts ...grpc.CallOption) (*RegisterUserResponse, error)
 	Login(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
-	ValidateToken(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*BoolResponse, error)
+	ValidateToken(ctx context.Context, in *ValidTokenRequest, opts ...grpc.CallOption) (*ValidBoolResponse, error)
 }
 
 type authClient struct {
@@ -61,9 +61,9 @@ func (c *authClient) Login(ctx context.Context, in *LoginUserRequest, opts ...gr
 	return out, nil
 }
 
-func (c *authClient) ValidateToken(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*BoolResponse, error) {
+func (c *authClient) ValidateToken(ctx context.Context, in *ValidTokenRequest, opts ...grpc.CallOption) (*ValidBoolResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(BoolResponse)
+	out := new(ValidBoolResponse)
 	err := c.cc.Invoke(ctx, Auth_ValidateToken_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -77,7 +77,7 @@ func (c *authClient) ValidateToken(ctx context.Context, in *TokenRequest, opts .
 type AuthServer interface {
 	Register(context.Context, *RegisterUserRequest) (*RegisterUserResponse, error)
 	Login(context.Context, *LoginUserRequest) (*LoginUserResponse, error)
-	ValidateToken(context.Context, *TokenRequest) (*BoolResponse, error)
+	ValidateToken(context.Context, *ValidTokenRequest) (*ValidBoolResponse, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -94,7 +94,7 @@ func (UnimplementedAuthServer) Register(context.Context, *RegisterUserRequest) (
 func (UnimplementedAuthServer) Login(context.Context, *LoginUserRequest) (*LoginUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedAuthServer) ValidateToken(context.Context, *TokenRequest) (*BoolResponse, error) {
+func (UnimplementedAuthServer) ValidateToken(context.Context, *ValidTokenRequest) (*ValidBoolResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateToken not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
@@ -155,7 +155,7 @@ func _Auth_Login_Handler(srv interface{}, ctx context.Context, dec func(interfac
 }
 
 func _Auth_ValidateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TokenRequest)
+	in := new(ValidTokenRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -167,7 +167,7 @@ func _Auth_ValidateToken_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: Auth_ValidateToken_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).ValidateToken(ctx, req.(*TokenRequest))
+		return srv.(AuthServer).ValidateToken(ctx, req.(*ValidTokenRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

@@ -6,7 +6,7 @@ option go_package = "github.com/goggle-source/authLotProto/gen/go/auth";
 service Auth {
     rpc Register(RegisterUserRequest) returns (RegisterUserResponse);
     rpc Login(LoginUserRequest) returns (LoginUserResponse);
-    rpc ValidateToken(TokenRequest) returns (BoolResponse);
+    rpc ValidateToken(ValidTokenRequest) returns (ValidBoolResponse);
 }
 
 message RegisterUserRequest {
@@ -29,11 +29,11 @@ message LoginUserResponse {
     string name = 2;
 }
 
-message TokenRequest {
+message ValidTokenRequest {
     string token = 1;
 }
 
-message BoolResponse {
+message ValidBoolResponse {
     bool isValid = 1;
 }
 
