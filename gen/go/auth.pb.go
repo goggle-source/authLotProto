@@ -351,7 +351,7 @@ const file_auth_proto_rawDesc = "" +
 	"\x04Auth\x12A\n" +
 	"\bRegister\x12\x19.auth.RegisterUserRequest\x1a\x1a.auth.RegisterUserResponse\x128\n" +
 	"\x05Login\x12\x16.auth.LoginUserRequest\x1a\x17.auth.LoginUserResponse\x127\n" +
-	"\rValidateToken\x12\x12.auth.TokenRequest\x1a\x12.auth.BoolResponseB,Z*github.com/goggle-source/authLotProto/authb\x06proto3"
+	"\rValidateToken\x12\x12.auth.TokenRequest\x1a\x12.auth.BoolResponseB3Z1github.com/goggle-source/authLotProto/gen/go/authb\x06proto3"
 
 var (
 	file_auth_proto_rawDescOnce sync.Once
