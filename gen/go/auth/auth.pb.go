@@ -84,7 +84,6 @@ func (x *RegisterUserRequest) GetPassword() string {
 type RegisterUserResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
-	Id            uint64                 `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -124,13 +123,6 @@ func (x *RegisterUserResponse) GetToken() string {
 		return x.Token
 	}
 	return ""
-}
-
-func (x *RegisterUserResponse) GetId() uint64 {
-	if x != nil {
-		return x.Id
-	}
-	return 0
 }
 
 type LoginUserRequest struct {
@@ -188,7 +180,7 @@ func (x *LoginUserRequest) GetPassword() string {
 type LoginUserResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
-	Id            uint64                 `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -230,11 +222,11 @@ func (x *LoginUserResponse) GetToken() string {
 	return ""
 }
 
-func (x *LoginUserResponse) GetId() uint64 {
+func (x *LoginUserResponse) GetName() string {
 	if x != nil {
-		return x.Id
+		return x.Name
 	}
-	return 0
+	return ""
 }
 
 type TokenRequest struct {
@@ -334,16 +326,15 @@ const file_auth_proto_rawDesc = "" +
 	"\x13RegisterUserRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1a\n" +
-	"\bpassword\x18\x03 \x01(\tR\bpassword\"<\n" +
+	"\bpassword\x18\x03 \x01(\tR\bpassword\",\n" +
 	"\x14RegisterUserResponse\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\x04R\x02id\"D\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"D\n" +
 	"\x10LoginUserRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"9\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"=\n" +
 	"\x11LoginUserResponse\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\x04R\x02id\"$\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"$\n" +
 	"\fTokenRequest\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\"(\n" +
 	"\fBoolResponse\x12\x18\n" +
