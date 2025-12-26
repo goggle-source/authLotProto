@@ -8,6 +8,7 @@ service Auth {
     rpc Login(LoginUserRequest) returns (LoginUserResponse);
     rpc ValidateToken(ValidTokenRequest) returns (ValidBoolResponse);
     rpc Health(HealthCheckRequest) returns (HealthCheckResponse);
+    rpc ValidateUserId(UserIdRequest) returns (ValidIsIdResponse);
 }
 
 message RegisterUserRequest {
@@ -41,11 +42,13 @@ message ValidBoolResponse {
 message HealthCheckRequest{}
 
 message HealthCheckResponse{
-    enum StatusServic{
-        FREE = 0;
-        SUCCESS = 1;
-        LIMIT = 2;
-    }
-    StatusServic status = 1;
     map<string, string> details = 2;
+}
+
+message UserIdRequest {
+    int64 id = 1;
+}
+
+message ValidIsIdResponse {
+    bool isValidId = 1;
 }

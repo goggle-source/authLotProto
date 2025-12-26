@@ -19,10 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Auth_Register_FullMethodName      = "/auth.Auth/Register"
-	Auth_Login_FullMethodName         = "/auth.Auth/Login"
-	Auth_ValidateToken_FullMethodName = "/auth.Auth/ValidateToken"
-	Auth_Health_FullMethodName        = "/auth.Auth/Health"
+	Auth_Register_FullMethodName       = "/auth.Auth/Register"
+	Auth_Login_FullMethodName          = "/auth.Auth/Login"
+	Auth_ValidateToken_FullMethodName  = "/auth.Auth/ValidateToken"
+	Auth_Health_FullMethodName         = "/auth.Auth/Health"
+	Auth_ValidateUserId_FullMethodName = "/auth.Auth/ValidateUserId"
 )
 
 // AuthClient is the client API for Auth service.
@@ -33,6 +34,7 @@ type AuthClient interface {
 	Login(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
 	ValidateToken(ctx context.Context, in *ValidTokenRequest, opts ...grpc.CallOption) (*ValidBoolResponse, error)
 	Health(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error)
+	ValidateUserId(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*ValidIsIdResponse, error)
 }
 
 type authClient struct {
@@ -83,6 +85,16 @@ func (c *authClient) Health(ctx context.Context, in *HealthCheckRequest, opts ..
 	return out, nil
 }
 
+func (c *authClient) ValidateUserId(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*ValidIsIdResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ValidIsIdResponse)
+	err := c.cc.Invoke(ctx, Auth_ValidateUserId_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServer is the server API for Auth service.
 // All implementations must embed UnimplementedAuthServer
 // for forward compatibility.
@@ -91,6 +103,7 @@ type AuthServer interface {
 	Login(context.Context, *LoginUserRequest) (*LoginUserResponse, error)
 	ValidateToken(context.Context, *ValidTokenRequest) (*ValidBoolResponse, error)
 	Health(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error)
+	ValidateUserId(context.Context, *UserIdRequest) (*ValidIsIdResponse, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -112,6 +125,9 @@ func (UnimplementedAuthServer) ValidateToken(context.Context, *ValidTokenRequest
 }
 func (UnimplementedAuthServer) Health(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Health not implemented")
+}
+func (UnimplementedAuthServer) ValidateUserId(context.Context, *UserIdRequest) (*ValidIsIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidateUserId not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
 func (UnimplementedAuthServer) testEmbeddedByValue()              {}
@@ -206,6 +222,24 @@ func _Auth_Health_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Auth_ValidateUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).ValidateUserId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Auth_ValidateUserId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).ValidateUserId(ctx, req.(*UserIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Auth_ServiceDesc is the grpc.ServiceDesc for Auth service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -228,6 +262,10 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Health",
 			Handler:    _Auth_Health_Handler,
+		},
+		{
+			MethodName: "ValidateUserId",
+			Handler:    _Auth_ValidateUserId_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
