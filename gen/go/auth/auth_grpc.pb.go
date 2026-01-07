@@ -21,7 +21,6 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	Auth_Register_FullMethodName       = "/auth.Auth/Register"
 	Auth_Login_FullMethodName          = "/auth.Auth/Login"
-	Auth_ValidateToken_FullMethodName  = "/auth.Auth/ValidateToken"
 	Auth_Health_FullMethodName         = "/auth.Auth/Health"
 	Auth_ValidateUserId_FullMethodName = "/auth.Auth/ValidateUserId"
 )
@@ -32,7 +31,6 @@ const (
 type AuthClient interface {
 	Register(ctx context.Context, in *RegisterUserRequest, opts ...grpc.CallOption) (*RegisterUserResponse, error)
 	Login(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
-	ValidateToken(ctx context.Context, in *ValidTokenRequest, opts ...grpc.CallOption) (*ValidBoolResponse, error)
 	Health(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error)
 	ValidateUserId(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*ValidIsIdResponse, error)
 }
@@ -65,16 +63,6 @@ func (c *authClient) Login(ctx context.Context, in *LoginUserRequest, opts ...gr
 	return out, nil
 }
 
-func (c *authClient) ValidateToken(ctx context.Context, in *ValidTokenRequest, opts ...grpc.CallOption) (*ValidBoolResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ValidBoolResponse)
-	err := c.cc.Invoke(ctx, Auth_ValidateToken_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *authClient) Health(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HealthCheckResponse)
@@ -101,7 +89,6 @@ func (c *authClient) ValidateUserId(ctx context.Context, in *UserIdRequest, opts
 type AuthServer interface {
 	Register(context.Context, *RegisterUserRequest) (*RegisterUserResponse, error)
 	Login(context.Context, *LoginUserRequest) (*LoginUserResponse, error)
-	ValidateToken(context.Context, *ValidTokenRequest) (*ValidBoolResponse, error)
 	Health(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error)
 	ValidateUserId(context.Context, *UserIdRequest) (*ValidIsIdResponse, error)
 	mustEmbedUnimplementedAuthServer()
@@ -119,9 +106,6 @@ func (UnimplementedAuthServer) Register(context.Context, *RegisterUserRequest) (
 }
 func (UnimplementedAuthServer) Login(context.Context, *LoginUserRequest) (*LoginUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
-}
-func (UnimplementedAuthServer) ValidateToken(context.Context, *ValidTokenRequest) (*ValidBoolResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ValidateToken not implemented")
 }
 func (UnimplementedAuthServer) Health(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Health not implemented")
@@ -186,24 +170,6 @@ func _Auth_Login_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_ValidateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ValidTokenRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthServer).ValidateToken(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Auth_ValidateToken_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).ValidateToken(ctx, req.(*ValidTokenRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Auth_Health_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HealthCheckRequest)
 	if err := dec(in); err != nil {
@@ -254,10 +220,6 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Login",
 			Handler:    _Auth_Login_Handler,
-		},
-		{
-			MethodName: "ValidateToken",
-			Handler:    _Auth_ValidateToken_Handler,
 		},
 		{
 			MethodName: "Health",
