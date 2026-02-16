@@ -311,7 +311,7 @@ func (x *HealthCheckResponse) GetDetails() map[string]string {
 
 type UserIdRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserID        string                 `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -346,11 +346,11 @@ func (*UserIdRequest) Descriptor() ([]byte, []int) {
 	return file_auth_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *UserIdRequest) GetId() int64 {
+func (x *UserIdRequest) GetUserID() string {
 	if x != nil {
-		return x.Id
+		return x.UserID
 	}
-	return 0
+	return ""
 }
 
 type ValidIsIdResponse struct {
@@ -420,9 +420,9 @@ const file_auth_proto_rawDesc = "" +
 	"\adetails\x18\x02 \x03(\v2&.auth.HealthCheckResponse.DetailsEntryR\adetails\x1a:\n" +
 	"\fDetailsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x1f\n" +
-	"\rUserIdRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\"1\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"'\n" +
+	"\rUserIdRequest\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\tR\x06userID\"1\n" +
 	"\x11ValidIsIdResponse\x12\x1c\n" +
 	"\tisValidId\x18\x01 \x01(\bR\tisValidId2\x82\x02\n" +
 	"\x04Auth\x12A\n" +

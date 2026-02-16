@@ -37,7 +37,7 @@ message HealthCheckResponse{
 }
 
 message UserIdRequest {
-    int64 id = 1;
+    string userID = 1;
 }
 
 message ValidIsIdResponse {
