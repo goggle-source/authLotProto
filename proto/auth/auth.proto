@@ -7,7 +7,6 @@ service Auth {
     rpc Register(RegisterUserRequest) returns (RegisterUserResponse);
     rpc Login(LoginUserRequest) returns (LoginUserResponse);
     rpc Health(HealthCheckRequest) returns (HealthCheckResponse);
-    rpc ValidateUserId(UserIdRequest) returns (ValidIsIdResponse);
 }
 
 message RegisterUserRequest {
@@ -36,10 +35,3 @@ message HealthCheckResponse{
     map<string, string> details = 2;
 }
 
-message UserIdRequest {
-    string userID = 1;
-}
-
-message ValidIsIdResponse {
-    bool isValidId = 1;
-}
